@@ -31,10 +31,15 @@ void setup()
 
 void loop()
 {   
-    float rh = sht.getHumidity();
-    float t = sht.getTemperature();
-    Serial.printf("T = %0.2f C\t\tRH = %0.2f %%\n", t, rh);
+    if(!sht.newMeasurement()->error)
+    {
+        Serial.println("Measurement failed!");
+    }else{
+        Serial.printf("T = %0.2f C\t\tRH = %0.2f %%\n", sht.getTemperature(), sht.getHumidity());
+    };
 
+    // or, if only one value needed:
+    Serial.printf("T = %0.2f\n", sht.newMeasurement()->temperature);
     delay(1000);
 };
 

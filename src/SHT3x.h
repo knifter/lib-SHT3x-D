@@ -24,6 +24,15 @@ class SHT3X : public TwoWireDevice
 		bool begin();
 		void reset();
 
+		typedef struct
+		{
+			int error;
+			time_t time;
+			float temperature;
+			float humidity;
+		} measurement_t;
+		measurement_t measurement;
+
 		enum class Mode_t : uint16_t
 		{
 			MODE_STRETCH_HIGHREP 	= 0x2C06,
@@ -37,8 +46,9 @@ class SHT3X : public TwoWireDevice
 
 		void enableHeater(bool);
 
-		float getTemperature();
-		float getHumidity();
+		measurement_t *newMeasurement();
+		float getTemperature() { return measurement.temperature; };
+		float getHumidity() { return measurement.humidity; };
 		
     protected:
 		typedef enum : uint16_t
@@ -117,11 +127,8 @@ class SHT3X : public TwoWireDevice
 		void clear_status();
 
         // Methods
-		bool get_measurement();
 
         // Other member variables
-		float _temperature = NAN;
-		float _humidity = NAN;
 		Mode_t _mode = Mode_t::MODE_HIGHREP;
 
 	private:
