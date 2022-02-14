@@ -60,6 +60,10 @@ void SHT3X::enableHeater(bool heat)
 
 SHT3X::measurement_t *SHT3X::newMeasurement()
 {
+	// in error cases let these be NaN
+	measurement.temperature = NAN;
+	measurement.humidity = NAN;
+
 	// Get T+RH+checksums
 	uint8_t buf[6];
 	write16_ML(static_cast<uint16_t>(_mode));
