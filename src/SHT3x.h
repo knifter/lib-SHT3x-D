@@ -21,7 +21,7 @@ class SHT3X : public TwoWireDevice
 		SHT3X(const uint8_t addr = SHT3X_ADDRESS_DEFAULT) : TwoWireDevice(addr) {};
         ~SHT3X() {};
 
-		bool begin();
+		bool begin(uint8_t address = 0);
 		void reset();
 
 		typedef struct

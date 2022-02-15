@@ -19,9 +19,9 @@ static uint8_t crc8(const uint8_t *data, const int len)
   	return crc;
 };
 
-bool SHT3X::begin()
+bool SHT3X::begin(uint8_t address)
 {
-	if(!TwoWireDevice::begin())
+	if(!TwoWireDevice::begin(address))
 	{
 		// ERROR("TwoWireDevice.begin() failed.");
 		return false;
