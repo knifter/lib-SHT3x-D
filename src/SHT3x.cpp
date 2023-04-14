@@ -36,6 +36,7 @@ bool SHT3X::begin(uint8_t address)
 		return false;
 	};
 	
+    _initialized = true;
 	return true;
 };
 
@@ -63,6 +64,12 @@ SHT3X::measurement_t *SHT3X::newMeasurement()
 	// in error cases let these be NaN
 	measurement.temperature = NAN;
 	measurement.humidity = NAN;
+
+    if(!_initialized)
+    {
+        measurement.error = 1;
+        return &measurement;
+    };
 
 	// Get T+RH+checksums
 	uint8_t buf[6];
