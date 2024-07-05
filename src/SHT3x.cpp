@@ -36,7 +36,7 @@ bool SHT3X::begin(uint8_t address)
 		return false;
 	};
 	
-	return true;
+	return last_error() == 0;
 };
 
 void SHT3X::reset()
@@ -111,7 +111,9 @@ SHT3X::measurement_t *SHT3X::newMeasurement()
 uint16_t SHT3X::get_status()
 {
 	write16_ML(CMD_READSTATUS);
-	return _status.set(read16_ML());
+	uint16_t s = read16_ML();
+	_status.set(s);
+	return s;
 };
 
 void SHT3X::clear_status()
